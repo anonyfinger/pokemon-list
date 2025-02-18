@@ -58,7 +58,7 @@ const calculateRating = (stats) => {
 };
 
 export default function Main() {
-  const [sortBy, setSortBy] = useState("id");
+  const [sortBy, setSortBy] = useState("default");
   const [sortOrder, setSortOrder] = useState("asc");
   const pokemonData = useSelector((state) => state.pokemon.data);
 
@@ -119,7 +119,7 @@ export default function Main() {
           value={`${sortBy}-${sortOrder}`}
           onChange={handleSortChange}
         >
-          <option value="default-asc">기본보기(카드번호순)</option>
+          <option value="default-asc">기본보기</option>
           <option value="id-asc">번호 오름차순</option>
           <option value="id-desc">번호 내림차순</option>
           <option value="name-asc">이름 오름차순</option>

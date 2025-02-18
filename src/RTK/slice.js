@@ -22,7 +22,6 @@ export const pokemonSlice = createSlice({
       });
   }, //비동기적 상태 변경
 });
-
 export const favoriteSlice = createSlice({
   name: "favorite",
   initialState: [],
