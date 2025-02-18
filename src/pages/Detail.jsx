@@ -6,13 +6,13 @@ import FlipCard from "../component/FlipCard";
 import styled from "styled-components";
 
 const DetailCard = styled.div`
-  background: white;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.95);
   border-radius: 15px;
-  padding: 1.5rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-  max-width: 1000px;
-  margin: 2rem auto;
   position: relative;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   overflow: hidden;
 
   &::before {
@@ -26,33 +26,69 @@ const DetailCard = styled.div`
   }
 
   .content-container {
+    padding: 0;
     max-width: 800px;
     margin: 0 auto;
-    width: 100%;
+  }
+
+  .image-container {
+    padding: 0;
+    margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 0.8rem;
+    align-items: center;
+    text-align: center;
+  }
+
+  .section-divider {
+    padding: 0.5rem 1rem;
+    margin: 0;
+    background: linear-gradient(to right, rgba(238, 21, 21, 0.1), transparent);
+    color: #333;
+    font-weight: bold;
+    text-align: center;
   }
 
   .pokemon-header {
+    padding: 0.5rem 1rem;
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     gap: 1rem;
-    padding-bottom: 0.8rem;
-    border-bottom: 2px solid rgba(238, 21, 21, 0.1);
+    position: relative;
+
+    .favorite-button {
+      position: absolute;
+      right: 1rem;
+    }
   }
 
   .pokemon-name {
     font-size: 2.5rem;
     color: #222224;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+
+  .star-rating {
+    display: flex;
+    gap: 2px;
+    justify-content: center;
+    margin-top: 0.5rem;
+    
+    .star {
+      font-size: 1.2rem;
+      color: #ffd700;
+      -webkit-text-stroke: 1px #b8860b;
+      text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3),
+        -1px -1px 1px rgba(255, 255, 255, 0.3);
+    }
   }
 
   .pokemon-types {
     display: flex;
     gap: 0.8rem;
-    margin: 0.3rem 0;
+    margin: 0.5rem 0;
     justify-content: center;
   }
 
@@ -68,9 +104,10 @@ const DetailCard = styled.div`
 
   .stats-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.8rem;
-    margin-top: 0.3rem;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    padding: 1rem;
+    text-align: center;
   }
 
   .stat-item {
@@ -109,71 +146,21 @@ const DetailCard = styled.div`
   }
 
   .pokemon-description {
-    background: #f8f8f8;
+    text-align: center;
     padding: 1rem;
-    border-radius: 12px;
-    font-size: 1.1rem;
-    line-height: 1.5;
-    color: #444;
-    border: 1px solid rgba(238, 21, 21, 0.1);
-    position: relative;
-
-    &::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 4px;
-      height: 100%;
-      background: linear-gradient(to bottom, #ee1515, #cc0000);
-      border-radius: 2px 0 0 2px;
-    }
+    line-height: 1.6;
+    color: #333;
   }
 
-  .section-divider {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin: 0.5rem 0;
+  .flip-guide {
+    margin-top: 0.5rem;
+    text-align: center;
     color: #666;
-    font-size: 1rem;
-    font-weight: bold;
-    text-transform: uppercase;
-
-    &::before,
-    &::after {
-      content: "";
-      height: 1px;
-      flex: 1;
-      background: linear-gradient(
-        90deg,
-        rgba(238, 21, 21, 0.1) 0%,
-        rgba(238, 21, 21, 0.3) 50%,
-        rgba(238, 21, 21, 0.1) 100%
-      );
-    }
-  }
-
-  .image-container {
+    font-size: 0.9rem;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    margin: 0.3rem 0;
-
-    .flip-guide {
-      margin-top: 0.3rem;
-      color: #666;
-      font-size: 0.9rem;
-      opacity: 0.8;
-      display: flex;
-      align-items: center;
-      gap: 0.3rem;
-
-      .icon {
-        font-size: 1rem;
-        color: #ee1515;
-      }
-    }
+    justify-content: center;
+    gap: 0.3rem;
   }
 `;
 
@@ -201,6 +188,15 @@ const getTypeColor = (type) => {
   return colors[type] || "#A8A878";
 };
 
+const calculateRating = (stats) => {
+  const totalStats = stats.hp + stats.attack + stats.defense + stats.speed;
+  if (totalStats >= 400) return 5;
+  if (totalStats >= 350) return 4;
+  if (totalStats >= 300) return 3;
+  if (totalStats >= 250) return 2;
+  return 1;
+};
+
 export default function Detail() {
   /**
    * useParams는 react-router-dom에서 제공하는 훅입니다.
@@ -223,12 +219,22 @@ export default function Detail() {
     abilities: [],
   };
 
+  const rating = calculateRating(pokemon.stats);
+
   return (
     <DetailCard>
       <div className="content-container">
         <div className="pokemon-header">
           <h2 className="pokemon-name">{pokemon.name}</h2>
-          <FavoriteButton pokemonId={Number(pokemonId)} />
+          <div className="favorite-button">
+            <FavoriteButton pokemonId={Number(pokemonId)} />
+          </div>
+        </div>
+        
+        <div className="star-rating">
+          {[...Array(rating)].map((_, index) => (
+            <span key={index} className="star">★</span>
+          ))}
         </div>
 
         <div className="section-divider">Type</div>

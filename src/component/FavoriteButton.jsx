@@ -7,7 +7,8 @@ const StyledButton = styled.button`
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 1.8rem; // 크기 약간 축소
+  
+  font-size: 1.5rem; // 크기 약간 축소
   padding: 0.3rem;
   display: flex;
   align-items: center;

@@ -15,80 +15,41 @@ const CardContainer = styled.section`
   position: relative;
   cursor: pointer;
   box-shadow: -5px -5px 10px rgba(255, 255, 255, 0.8),
-    5px 5px 10px rgba(0, 0, 0, 0.1), inset 0 0 0 rgba(255, 255, 255, 0.4),
-    inset 0 0 0 rgba(0, 0, 0, 0.05);
+    5px 5px 10px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   transition: all 0.3s ease;
 
-  // 포켓볼 상단 부분
-  &::before {
-    content: "";
+  // 클릭 영역
+  .card-link {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 40%;
-    background: linear-gradient(
-      165deg,
-      rgba(238, 21, 21, 0.95) 0%,
-      rgba(204, 0, 0, 0.9) 100%
-    );
-    border-bottom: 3px solid rgba(34, 34, 36, 0.8);
-    z-index: 1;
-    box-shadow: inset 0 -3px 6px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(5px);
+    right: 0;
+    height: 75%;
+    z-index: 15;
+    cursor: pointer;
   }
 
-  // 포켓볼 중앙 버튼
-  &::after {
-    content: "";
-    position: absolute;
-    top: calc(40% - 15px);
-    left: 50%;
-    transform: translateX(-50%);
-    width: 30px;
-    height: 30px;
-    background: linear-gradient(145deg, #ffffff 30%, #e8e8e8 100%);
-    border: 3px solid rgba(34, 34, 36, 0.8);
-    border-radius: 50%;
-    box-shadow: -2px -2px 4px rgba(255, 255, 255, 0.8),
-      2px 2px 4px rgba(0, 0, 0, 0.1), inset -2px -2px 4px rgba(0, 0, 0, 0.05),
-      inset 2px 2px 4px rgba(255, 255, 255, 0.8);
-    z-index: 2;
-    transition: all 0.3s ease;
+  &:hover {
+    transform: translateY(-5px);
+
+    .image-container img {
+      transform: scale(1.05);
+    }
   }
 
-  .info-container {
-    width: 90%;
-    z-index: 3;
-    background: linear-gradient(
-      145deg,
-      rgba(255, 255, 255, 0.98),
-      rgba(248, 249, 250, 0.95)
-    );
-    padding: 0.3rem 0.4rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.5),
-      inset -1px -1px 2px rgba(0, 0, 0, 0.05),
-      inset 1px 1px 2px rgba(255, 255, 255, 0.8);
-    position: absolute;
-    top: 7%;
-    left: 50%;
-    transform: translateX(-50%);
-    backdrop-filter: blur(5px);
-  }
-
+  // 이미지 컨테이너
   .image-container {
     width: 140px;
     height: 140px;
     position: absolute;
-    top: 70%;
+    top: 63%;
     left: 50%;
     transform: translate(-50%, -50%);
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 1;
+    z-index: 2;
 
     img {
       width: 130px;
@@ -96,6 +57,81 @@ const CardContainer = styled.section`
       object-fit: contain;
       transition: transform 0.3s ease;
       filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+    }
+  }
+
+  // 상단 헤더 컨테이너
+  .header-container {
+    position: absolute;
+    top: 10px;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 0 12px;
+    z-index: 3;
+  }
+
+  // 포켓몬 이름
+  .pokemon-title {
+    background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.8),
+      rgba(255, 255, 255, 0.7)
+    );
+    padding: 8px 20px;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    color: #222;
+    font-weight: 600;
+    backdrop-filter: blur(4px);
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+
+  // 별점 컨테이너
+  .star-rating {
+    display: flex;
+    gap: 2px;
+    justify-content: center;
+
+    .star {
+      font-size: 0.9rem;
+      color: #ffd700;
+      -webkit-text-stroke: 1px #b8860b;
+      text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3),
+        -1px -1px 1px rgba(255, 255, 255, 0.3);
+    }
+  }
+
+  // 하단 정보 컨테이너
+  .info-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.2rem 0.4rem;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(5px);
+    border-radius: 0 0 15px 15px;
+
+    .pokemon-id {
+      font-size: 0.9rem;
+      font-weight: bold;
+      color: #666;
+    }
+
+    .favorite-button {
+      position: relative;
+      margin-left: auto;
+      z-index: 10; // 가장 앞으로
     }
   }
 
@@ -128,38 +164,21 @@ const CardContainer = styled.section`
       transform: translateY(-50%) scale(0.9);
     }
   }
-
-  .pokemon-id {
-    font-size: 0.65rem;
-    color: #666;
-    text-align: center;
-    margin-top: 0.1rem;
-    text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.8);
-  }
-
-  &:hover {
-    transform: translateY(-5px) scale(1.02);
-    box-shadow: -8px -8px 15px rgba(255, 255, 255, 0.8),
-      8px 8px 15px rgba(0, 0, 0, 0.15);
-
-    &::after {
-      background: linear-gradient(145deg, #ee1515 30%, #cc0000 100%);
-      border-color: rgba(34, 34, 36, 0.8);
-      box-shadow: -2px -2px 4px rgba(255, 255, 255, 0.4),
-        2px 2px 4px rgba(0, 0, 0, 0.2), inset -1px -1px 2px rgba(0, 0, 0, 0.2),
-        inset 1px 1px 2px rgba(255, 255, 255, 0.3);
-    }
-
-    .image-container img {
-      transform: scale(1.1);
-      filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.3));
-    }
-  }
 `;
+
+const calculateRating = (stats) => {
+  const totalStats = stats.hp + stats.attack + stats.defense + stats.speed;
+  if (totalStats >= 400) return 5;
+  if (totalStats >= 350) return 4;
+  if (totalStats >= 300) return 3;
+  if (totalStats >= 250) return 2;
+  return 1;
+};
 
 export const Card = memo(({ pokemon }) => {
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
+  const rating = calculateRating(pokemon.stats);
 
   const handleImageLoad = useCallback(() => {
     setIsLoading(false);
@@ -170,7 +189,8 @@ export const Card = memo(({ pokemon }) => {
   }, [pokemon.id, navigate]);
 
   return (
-    <CardContainer onClick={handleClick}>
+    <CardContainer>
+      <div className="card-link" onClick={handleClick} />
       <div className="image-container">
         {isLoading && (
           <div className="animate-spin rounded-full h-12 w-12 border-4 border-red-500 border-t-transparent" />
@@ -182,14 +202,21 @@ export const Card = memo(({ pokemon }) => {
           className={isLoading ? "hidden" : "block"}
         />
       </div>
-      <div className="info-container">
-        <div className="pokemon-name">
-          <span className="name-text">{pokemon.name}</span>
-          <div className="favorite-button">
-            <FavoriteButton pokemonId={pokemon.id} />
-          </div>
+      <div className="header-container">
+        <div className="pokemon-title">{pokemon.name}</div>
+        <div className="star-rating">
+          {[...Array(rating)].map((_, index) => (
+            <span key={index} className="star">
+              ★
+            </span>
+          ))}
         </div>
+      </div>
+      <div className="info-container">
         <div className="pokemon-id">#{String(pokemon.id).padStart(3, "0")}</div>
+        <div className="favorite-button">
+          <FavoriteButton pokemonId={pokemon.id} />
+        </div>
       </div>
     </CardContainer>
   );
