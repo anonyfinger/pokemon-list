@@ -10,11 +10,11 @@ const FavoriteContainer = styled.div`
 
 const GridContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, 200px);
   gap: 2rem;
   max-width: 1200px;
   margin: 0 auto;
-  justify-items: center;
+  justify-content: center;
 
   @media (max-width: 1200px) {
     grid-template-columns: repeat(auto-fit, 200px);
