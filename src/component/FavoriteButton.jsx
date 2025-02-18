@@ -1,24 +1,26 @@
+import { memo, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { favoriteSlice } from "../RTK/slice";
 
-export default function FavoriteButton({ pokemonId }) {
+const FavoriteButton = memo(function FavoriteButton({ pokemonId }) {
   const isFavorite = useSelector((state) =>
     state.favorite.some((item) => item === pokemonId)
   );
   const dispatch = useDispatch();
 
-  return (
-    <button
-      onClick={(e) => {
-        e.stopPropagation();
-        dispatch(
-          isFavorite
-            ? favoriteSlice.actions.removeFromFavorite({ pokemonId })
-            : favoriteSlice.actions.addToFavorite({ pokemonId })
-        );
-      }}
-    >
-      {isFavorite ? "❤️" : "🤍"}
-    </button>
+  const handleClick = useCallback(
+    (e) => {
+      e.stopPropagation();
+      dispatch(
+        isFavorite
+          ? favoriteSlice.actions.removeFromFavorite({ pokemonId })
+          : favoriteSlice.actions.addToFavorite({ pokemonId })
+      );
+    },
+    [dispatch, isFavorite, pokemonId]
   );
-}
+
+  return <button onClick={handleClick}>{isFavorite ? "❤️" : "🤍"}</button>;
+});
+
+export default FavoriteButton;

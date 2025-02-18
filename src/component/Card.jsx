@@ -1,7 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import FavoriteButton from "./FavoriteButton";
-const StyledSection = styled.section`
+import { memo, useState, useCallback } from "react";
+
+const CardContainer = styled.section`
   width: 150px;
   border: 1px solid gray;
   display: flex;
@@ -19,16 +21,31 @@ const StyledSection = styled.section`
   }
 `;
 
-export const Card = ({ pokemon }) => {
+export const Card = memo(({ pokemon }) => {
+  console.log("card", pokemon.id);
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
+  const handleImageLoad = useCallback(() => {
+    setIsLoading(false);
+  }, []);
+
+  const handleClick = useCallback(() => {
+    navigate(`/detail/${pokemon.id}`);
+  }, [pokemon.id, navigate]);
+
   return (
-    <StyledSection onClick={() => navigate(`/detail/${pokemon.id}`)}>
-      <img src={pokemon.front} />
+    <CardContainer onClick={handleClick}>
+      {isLoading ? (
+        <div className="w-[120px] h-[120px] leading-[120px] text-center">
+          Loading...
+        </div>
+      ) : null}
+      <img onLoad={handleImageLoad} src={pokemon.front} />
       <div>
         {pokemon.name}
         <FavoriteButton pokemonId={pokemon.id} />
       </div>
-    </StyledSection>
+    </CardContainer>
   );
-};
+});

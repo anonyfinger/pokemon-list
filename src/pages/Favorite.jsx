@@ -1,8 +1,9 @@
+import { memo } from "react";
 import { useSelector } from "react-redux";
 import { selectFavoritepokemons } from "../RTK/selector";
 import { Card } from "../component/Card";
 
-export default function Favorite() {
+const Favorite = memo(function Favorite() {
   const pokemon = useSelector(selectFavoritepokemons);
   return (
     <>
@@ -11,4 +12,6 @@ export default function Favorite() {
       ))}
     </>
   );
-}
+});
+
+export default Favorite;
