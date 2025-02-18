@@ -16,13 +16,15 @@ function App() {
   const pokemonData = useSelector((state) => state.pokemon);
 
   useEffect(() => {
-    dispatch(fetchMultiplePokemonById(1025));
+    dispatch(fetchMultiplePokemonById(20));
   }, []);
 
   return (
     <>
-      <h1 className="text-5xl text-center">포켓몬 도감</h1>
-      <nav className="flex justify-center gap-4">
+      <h1 className="border-t-[50px] border-t-[red] bg-black text-white text-[40px] text-center">
+        포켓몬 도감
+      </h1>
+      <nav className="py-[10px] border-b-[3px] border-b-black flex justify-center gap-[20px]">
         <Link to="/">메인</Link>
         <Link to="/favorite">찜목록</Link>
         <div>
@@ -33,7 +35,7 @@ function App() {
           <span>🔎</span>
         </div>
       </nav>
-      <main className="flex flex-wrap justify-center gap-[20px] pt-[20px]">
+      <main className="pb-[20px] bg-[gray] flex flex-wrap justify-center gap-[20px] pt-[20px]">
         <Routes>
           <Route path="/" element={<Main />} />
           <Route path="/detail/:pokemonId" element={<Detail />} />

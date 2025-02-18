@@ -11,6 +11,8 @@ const StyledSection = styled.section`
   gap: 10px;
   padding-bottom: 10px;
   border-radius: 10px;
+  border-bottom: 5px solid black;
+  border-right: 5px solid black;
 
   img {
     width: 120px;

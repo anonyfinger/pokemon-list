@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { SelectpokemonById } from "../RTK/selector";
 import FavoriteButton from "../component/FavoriteButton";
+import FlipCard from "../component/FlipCard";
 
 export default function Detail() {
   /**
@@ -12,19 +13,23 @@ export default function Detail() {
    */
   const { pokemonId } = useParams();
   console.log(typeof pokemonId);
-  const pokemon = useSelector(SelectpokemonById(Number(pokemonId)));
-  console.log(pokemon);
+  const pokemon = useSelector(SelectpokemonById(Number(pokemonId))) || {
+    name: "",
+    description: "",
+    front: "",
+    back: "",
+  };
 
   return (
-    <div className="flex flex-col items-center justify-center border border-[gray] p-[30px] rounded-[10px]">
+    <div className="bg-[white] flex flex-col items-center justify-center border py-[30px] px-[60px] rounded-[10px] border-b-[10px] border-r-[10px] border-black">
       <div className="text-[28px] mb-[10px]">
         {pokemon.name}
-        <FavoriteButton pokemonId={Number(pokemon.id)} />
+        <FavoriteButton pokemonId={Number(pokemonId)} />
       </div>
       <div className="whitespace-pre-wrap text-center">
         {pokemon.description}
       </div>
-      <img className="w-[200px]" src={pokemon.front} />
+      <FlipCard front={pokemon.front} back={pokemon.back} />
     </div>
   );
 }
