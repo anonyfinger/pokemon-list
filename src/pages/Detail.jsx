@@ -75,7 +75,7 @@ const DetailCard = styled.div`
     gap: 2px;
     justify-content: center;
     margin-top: 0.5rem;
-    
+
     .star {
       font-size: 1.2rem;
       color: #ffd700;
@@ -230,10 +230,12 @@ export default function Detail() {
             <FavoriteButton pokemonId={Number(pokemonId)} />
           </div>
         </div>
-        
+
         <div className="star-rating">
           {[...Array(rating)].map((_, index) => (
-            <span key={index} className="star">★</span>
+            <span key={index} className="star">
+              ★
+            </span>
           ))}
         </div>
 
