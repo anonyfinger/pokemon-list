@@ -13,10 +13,10 @@ export default function Search() {
   const pokemon = useSelector(selecPokemonByRegExp(reg));
 
   return (
-    <>
+    <div className="pokemon-grid">
       {pokemon.map((el) => (
         <Card key={el.id} pokemon={el} />
       ))}
-    </>
+    </div>
   );
 }
