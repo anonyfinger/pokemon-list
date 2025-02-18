@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-
+import FavoriteButton from "./FavoriteButton";
 const StyledSection = styled.section`
   width: 150px;
   border: 1px solid gray;
@@ -23,7 +23,10 @@ export const Card = ({ pokemon }) => {
   return (
     <StyledSection onClick={() => navigate(`/detail/${pokemon.id}`)}>
       <img src={pokemon.front} />
-      <div>{pokemon.name}</div>
+      <div>
+        {pokemon.name}
+        <FavoriteButton pokemonId={pokemon.id} />
+      </div>
     </StyledSection>
   );
 };

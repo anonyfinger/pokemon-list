@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { SelectpokemonById } from "../RTK/selector";
+import FavoriteButton from "../component/FavoriteButton";
 
 export default function Detail() {
   /**
@@ -16,7 +17,10 @@ export default function Detail() {
 
   return (
     <div className="flex flex-col items-center justify-center border border-[gray] p-[30px] rounded-[10px]">
-      <div className="text-[28px] mb-[10px]">{pokemon.name}</div>
+      <div className="text-[28px] mb-[10px]">
+        {pokemon.name}
+        <FavoriteButton pokemonId={Number(pokemon.id)} />
+      </div>
       <div className="whitespace-pre-wrap text-center">
         {pokemon.description}
       </div>
